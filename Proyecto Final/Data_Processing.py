@@ -93,7 +93,9 @@ def data_socioeconomic_processing(file):
                                                                            "Secundaria (Bachillerato) completa": 8,
                                                                            "Secundaria (Bachillerato) incompleta": 9,
                                                                            "Técnica o tecnológica completa": 10,
-                                                                           "Técnica o tecnológica incompleta": 11})
+                                                                           "Técnica o tecnológica incompleta": 11,
+                                                                           "No aplica": 12,
+                                                                           "No Aplica": 12})
 
     #       Modificando cada respuesta de fami_educacionmadre.1 por valores numéricos
     data["fami_educacionmadre.1"] = data["fami_educacionmadre.1"].replace({False: 0,
@@ -107,7 +109,9 @@ def data_socioeconomic_processing(file):
                                                                            "Secundaria (Bachillerato) completa": 8,
                                                                            "Secundaria (Bachillerato) incompleta": 9,
                                                                            "Técnica o tecnológica completa": 10,
-                                                                           "Técnica o tecnológica incompleta": 11})
+                                                                           "Técnica o tecnológica incompleta": 11,
+                                                                           "No aplica": 12,
+                                                                           "No Aplica": 12})
     #       Modificando cada respuesta de fami_ocupacionpadre.1 por valores numéricos
     data["fami_ocupacionpadre.1"] = data["fami_ocupacionpadre.1"].replace({False: 0,
                                                                            "Empleado con cargo como director o gerente general": 1,
@@ -265,7 +269,9 @@ def data_score_socioeconomic_processing(file):
                                                                            "Secundaria (Bachillerato) completa": 8,
                                                                            "Secundaria (Bachillerato) incompleta": 9,
                                                                            "Técnica o tecnológica completa": 10,
-                                                                           "Técnica o tecnológica incompleta": 11})
+                                                                           "Técnica o tecnológica incompleta": 11,
+                                                                           "No aplica": 12,
+                                                                           "No Aplica": 12})
 
     #       Modificando cada respuesta de fami_educacionmadre.1 por valores numéricos
     data["fami_educacionmadre.1"] = data["fami_educacionmadre.1"].replace({False: 0,
@@ -279,7 +285,9 @@ def data_score_socioeconomic_processing(file):
                                                                            "Secundaria (Bachillerato) completa": 8,
                                                                            "Secundaria (Bachillerato) incompleta": 9,
                                                                            "Técnica o tecnológica completa": 10,
-                                                                           "Técnica o tecnológica incompleta": 11})
+                                                                           "Técnica o tecnológica incompleta": 11,
+                                                                           "No aplica": 12,
+                                                                           "No Aplica": 12})
     #       Modificando cada respuesta de fami_ocupacionpadre.1 por valores numéricos
     data["fami_ocupacionpadre.1"] = data["fami_ocupacionpadre.1"].replace({False: 0,
                                                                            "Empleado con cargo como director o gerente general": 1,
@@ -350,7 +358,6 @@ def data_score_socioeconomic_processing(file):
     data["estu_trabajaactualmente"] = data["estu_trabajaactualmente"].replace({False: 0,
                                                                                "Si, 20 horas o más a la semana": 1,
                                                                                "Si, menos de 20 horas a la semana": 2})
-
 
     #       Guardamos todos los datos referentes al puntaje e información socioeconómica en x_data
     x_data = data[["fami_trabajolaborpadre", "fami_trabajolabormadre", "fami_numlibros", "estu_genero.1", "fami_educacionpadre.1",
