@@ -1,10 +1,3 @@
-"""
-    Profe, sinceramente el ejercicio de borrado pudo conmigo. No fui capaz con el :(
-        Hice una implementacion distinta de los nodos y el arbol e hice metodos que retornan
-        el mayor numero y menor numero del arbol, he estado haciendo pruebas de como obtener su altura pero aún no logro nada
-        y obviamente está el metodo de eliminar pero no funciona.
-"""
-
 class Nodo():
     def __init__(self, dato, padre):
         self.dato = dato
@@ -84,29 +77,41 @@ class Arbol():
             else:
                 return self._buscar(elemento, raiz.der)
 
-    #   No sirve
     def eliminar(self, elemento):
         self.e = self._eliminar(elemento, self.e)
 
     def _eliminar(self, elemento, raiz):
-        if raiz.izq == None and raiz.der == None:
-            return raiz.padre
+        if raiz == None:
+            return None
+        elif elemento < raiz.dato:
+                iz = self._eliminar(elemento, raiz.izq)
+                raiz.izq = iz
+        elif elemento > raiz.dato:
+                de = self._eliminar(elemento, raiz.der)
+                raiz.der = de 
         else:
-            if elemento == raiz.dato:
-                if raiz.izq == None and raiz.der == None:
-                    hijo_derecho = raiz.padre.der
-                    hijo_izquierdo = raiz.padre.izq
-
-                    if hijo_izquierdo == raiz:
-                        raiz.padre.izq = None
-
-                    elif hijo_derecho == raiz:
-                        raiz.padre.der = None
-
-            elif elemento < raiz.dato:
-                return self._eliminar(elemento, raiz.izq)
+            aux = raiz
+            if aux.izq == None:
+                raiz = aux.izq
+            elif aux.der == None:
+                raiz = aux.der
             else:
-                return self._eliminar(elemento, raiz.der)
+                aux = cambiar(aux)
+            aux = None
+        return raiz
+
+    def cambiar(self, aux):
+        nodo1 = aux
+        nodo2 = aux.izq
+        while nodo2.der is not None:
+            nodo1 = nodo2
+            nodo2 = nodo2.der
+        aux.dato = nodo2.dato
+        if nodo1 == aux:
+            nodo1.izq = nodo2.izq
+        else:
+            nodo1.der = nodo2.der
+        return nodo2
 
     def num_niveles(self):
         return self._num_niveles(self.e)
@@ -153,7 +158,11 @@ el_Arbol.insertar(99)
 el_Arbol.insertar(77)
 el_Arbol.insertar(111)
 el_Arbol.insertar(4)
-el_Arbol.postorder()
+el_Arbol.inorder()
 print()
-print(el_Arbol.getMax())
-print(el_Arbol.getMin())
+
+el_Arbol.eliminar(77)
+el_Arbol.eliminar(2)
+el_Arbol.eliminar(4)
+el_Arbol.eliminar(111)
+el_Arbol.inorder()
