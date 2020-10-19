@@ -13,10 +13,10 @@ class Nodo():
 
 class Arbol():
     def __init__(self):
-        self.e = None
+        self.root = None
 
     def insertar(self, elemento):
-        self.e = self._insertar(self.e, elemento, None)
+        self.root = self._insertar(self.root, elemento, None)
 
     def _insertar(self, raiz, dato, padre):
         if raiz == None:
@@ -29,7 +29,7 @@ class Arbol():
         return raiz
 
     def inorder(self):
-        self._inorder(self.e)
+        self._inorder(self.root)
 
     def _inorder(self, raiz):
         if raiz == None:
@@ -40,7 +40,7 @@ class Arbol():
             self._inorder(raiz.der)
 
     def postorder(self):
-        self._postorder(self.e)
+        self._postorder(self.root)
 
     def _postorder(self, raiz):
         if raiz == None:
@@ -51,7 +51,7 @@ class Arbol():
             print(raiz.dato)
 
     def preorder(self):
-        self._preorder(self.e)
+        self._preorder(self.root)
 
     def _preorder(self, raiz):
         if raiz == None:
@@ -62,27 +62,28 @@ class Arbol():
             self._preorder(raiz.der)
 
     def buscar(self, elemento):
-        return self._buscar(elemento, self.e)
+        return self._buscar(elemento, self.root)
 
-    def _buscar(self, elemento, raiz):
+    def _buscar(self, elemento, raiz, altura=1):
         if raiz == None:
-            print("el elemento no se encuentra")
+            print("el elemento", elemento, "no se encuentra")
             return False
         else:
             if elemento == raiz.dato:
-                print("el elemento se encuentra")
+                print("el elemento", elemento, "se encuentra en la altura ", altura)
                 return True
             elif elemento < raiz.dato:
-                return self._buscar(elemento, raiz.izq)
+                return self._buscar(elemento, raiz.izq, altura+1)
             else:
-                return self._buscar(elemento, raiz.der)
+                return self._buscar(elemento, raiz.der, altura+1)
 
     def eliminar(self, elemento):
-        self.e = self._eliminar(elemento, self.e)
+        self.root = self._eliminar(elemento, self.root)
 
     def _eliminar(self, elemento, raiz):
         if raiz == None:
             return None
+        
         elif elemento < raiz.dato:
                 iz = self._eliminar(elemento, raiz.izq)
                 raiz.izq = iz
@@ -96,7 +97,7 @@ class Arbol():
             elif aux.der == None:
                 raiz = aux.der
             else:
-                aux = cambiar(aux)
+                aux = self.cambiar(aux)
             aux = None
         return raiz
 
@@ -113,22 +114,39 @@ class Arbol():
             nodo1.der = nodo2.der
         return nodo2
 
-    def num_niveles(self):
-        return self._num_niveles(self.e)
+    def num_profundidad(self):
+        return self._num_profundidad(self.root)
 
-    def _num_niveles(self, raiz, num=0):
-        aux = num
+    def _num_profundidad(self, raiz, num=0, lista=[]):
         if raiz == None:
             return 0
         else:
-            self._num_niveles(raiz.izq, num+1)
-            self._num_niveles(raiz.der, num+1)
-            if num < aux:
-                aux = num
-        return aux
+            self._num_profundidad(raiz.izq)
+            lista.append(raiz.dato)
+            self._num_profundidad(raiz.der)
+        profundidad = 0
+        profundidad_aux = 0
+        for i in lista:
+            profundidad = self.buscar_nivel(i, self.root)
+            if profundidad > profundidad_aux:
+                profundidad_aux = profundidad
+        return profundidad_aux
+
+        return lista
+
+    def buscar_nivel(self, elemento, raiz, altura=1):
+        if raiz == None:
+            return 0
+        else:
+            if elemento == raiz.dato:
+                return altura
+            elif elemento < raiz.dato:
+                return self.buscar_nivel(elemento, raiz.izq, altura+1)
+            else:
+                return self.buscar_nivel(elemento, raiz.der, altura+1)
 
     def getMax(self):
-        return self._getMax(self.e)
+        return self._getMax(self.root)
 
     def _getMax(self, raiz):
         if raiz == None:
@@ -139,7 +157,7 @@ class Arbol():
         return raiz.dato
 
     def getMin(self):
-        return self._getMin(self.e)
+        return self._getMin(self.root)
 
     def _getMin(self, raiz):
         if raiz == None:
@@ -151,18 +169,22 @@ class Arbol():
 
 el_Arbol = Arbol()
 el_Arbol.insertar(12)
-el_Arbol.insertar(1)
-el_Arbol.insertar(24)
-el_Arbol.insertar(2)
-el_Arbol.insertar(99)
-el_Arbol.insertar(77)
-el_Arbol.insertar(111)
 el_Arbol.insertar(4)
-el_Arbol.inorder()
-print()
+el_Arbol.insertar(20)
+el_Arbol.insertar(25)
+el_Arbol.insertar(50)
+el_Arbol.insertar(907)
+el_Arbol.insertar(120)
+el_Arbol.insertar(1)
+el_Arbol.insertar(-1)
+el_Arbol.insertar(99)
 
-el_Arbol.eliminar(77)
-el_Arbol.eliminar(2)
-el_Arbol.eliminar(4)
-el_Arbol.eliminar(111)
+
+el_Arbol.inorder()
+el_Arbol.buscar(-1)
+print("La profundidad del arbol es de", el_Arbol.num_profundidad())
+print()
+el_Arbol.eliminar(12)
+el_Arbol.eliminar(10)
+el_Arbol.eliminar(99)
 el_Arbol.inorder()
